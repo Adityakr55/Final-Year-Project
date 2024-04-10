@@ -1,5 +1,5 @@
 # save this as app.py
-from flask import Flask, escape, request, render_template
+from flask import Flask, request, render_template
 import pickle
 import numpy as np
 
@@ -11,7 +11,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/predict', methods=['GET', 'POST'])
+@app.route('/prediction.html', methods=['GET', 'POST'])
 def predict():
     if request.method ==  'POST':
         gender = request.form['gender']
@@ -92,11 +92,12 @@ def predict():
 
         if(prediction=="N"):
             prediction="No"
+            return render_template("prediction.html", prediction_text="{}, You are not eligible for loan.".format(prediction))
         else:
             prediction="Yes"
+            return render_template("prediction.html", prediction_text="{}, You are eligible for loan.".format(prediction))
 
-
-        return render_template("prediction.html", prediction_text="loan status is {}".format(prediction))
+        
 
 
 
