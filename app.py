@@ -92,7 +92,8 @@ def predict():
 
         if(prediction=="N"):
             prediction="No"
-            return render_template("prediction.html", prediction_text="{}, You are not eligible for loan.".format(prediction))
+            return render_template("prediction.html", prediction_text="{}, You are not eligible for loan.".fo
+            rmat(prediction))
         else:
             prediction="Yes"
             return render_template("prediction.html", prediction_text="{}, You are eligible for loan.".format(prediction))
