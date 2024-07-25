@@ -25,6 +25,17 @@ def predict():
         CoapplicantIncome = float(request.form['CoapplicantIncome'])
         LoanAmount = float(request.form['LoanAmount'])
         Loan_Amount_Term = float(request.form['Loan_Amount_Term'])
+        
+        #new feature
+
+        Previous_loan_amount=float(request.form['Previous_loan_amount'])
+        profession = request.form['profession']
+        Paid_amount=float(request.form['Paid_amount'])
+
+        
+
+
+        #new feature
 
         # gender
         if (gender == "Male"):
@@ -80,6 +91,56 @@ def predict():
             semiurban=0
             urban=0
 
+        #new change in logic
+
+        #biasing based on profession
+        
+        if profession == "Farming":
+            ApplicantIncome += 100
+        elif profession == "Teaching":
+            ApplicantIncome += 300
+        elif profession == "Banking":
+            ApplicantIncome += 800
+        elif profession == "Doctor":
+            ApplicantIncome += 500
+        elif profession == "Other":
+            ApplicantIncome += 50
+
+
+        #biasing based on education
+        if education == "Graduate":
+            ApplicantIncome += 50
+
+
+        #biasing based on previous loan amount
+        Left_amount=Previous_loan_amount-Paid_amount
+        if Left_amount >= 2500:
+            Applicant_income = 0
+        elif 1500 <= Left_amount < 2500:
+            Applicant_income -= Left_amount
+        if Applicant_income <= 0:
+            Applicant_income = 0
+        elif 500 < Left_amount < 1500:
+            Applicant_income -= 500
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        #new change 
+
 
         ApplicantIncomelog = np.log(ApplicantIncome)
         totalincomelog = np.log(ApplicantIncome+CoapplicantIncome)
@@ -91,7 +152,7 @@ def predict():
         # print(prediction)
 
         if(prediction=="N"):
-            prediction="No"
+            prediction="No" 
             return render_template("prediction.html", prediction_text="{}, You are not eligible for loan.".format(prediction))
         else:
             prediction="Yes"
