@@ -114,16 +114,13 @@ def predict():
 
         #biasing based on previous loan amount
 
-        
+
         Left_amount=Previous_loan_amount-Paid_amount
         if Left_amount >= 2500:
             Applicant_income = 0
-        elif 1500 <= Left_amount < 2500:
-            Applicant_income -= Left_amount
-        if Applicant_income <= 0:
-            Applicant_income = 0
-        elif 500 < Left_amount < 1500:
-            Applicant_income -= 500
+        elif 1000 <= Left_amount < 2500:
+            LoanAmount += Left_amount
+        
 
 
 
